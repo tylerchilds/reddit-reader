@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reddit Reader</title>
+    <meta name="description" content="A nice and simple reddit feed">
+    <link rel="stylesheet" href="css/cutestrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+
+
+  <body>
+
+    <header>
+      <h1>Reddit Reader</h1>
+    </header>
+
+    <aside>
+      <form id="add-form">
+        <label class="textfield">
+          <input type="text" id="subreddit-field" />
+          <span class="textfield__label">Add Subreddit</span>
+        </label>
+        <button type="submit">+</button>
+      </form>
+
+      <div id="subreddits" aria-live="polite"></div>
+    </aside>
+    <section id="posts" aria-live="polite"></section>
+
+    <script id="post-template" type="text/x-handlebars-template">
+      <div class="toggle"></div>
+      <a href="{{url}}" target="_blank" class="post__title">{{title}}</a>
+      <div class="post__content">
+        {{#if isImage}}
+          <img src="{{url}}" alt="{{title}}" />
+        {{/if}}
+
+        {{#if selftext}}
+          <p>{{selftext}}</p>
+        {{/if}}
+      </div>
+      <div class="post__meta">
+        <span>Posted by {{author}} in r/{{subreddit}}</span> <a href="javascript:;" data-id="{{id}}" data-subreddit="{{subreddit}}" class="load-comments">View Comments</a>
+      </div>
+    </script>
+
+    <script id="comment-template" type="text/x-handlebars-template">
+      <div class="toggle"></div>
+      <span class="fs-small">{{author}}</span>
+      <div class="comment__body">
+        {{{body}}}
+      </div>
+    </script>
+
+    <script src="js/vendor/handlebars.js"></script>
+    <script src="js/element.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/comment-thread.js"></script>
+    <script src="js/post.js"></script>
+    <script src="js/infinite-list.js"></script>
+    <script src="js/post-list.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+
+</html>
