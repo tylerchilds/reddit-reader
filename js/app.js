@@ -21,7 +21,9 @@
   }
 
   App.prototype.render = function(){
-    new PostList({
+    if(this.postList) this.postList.destroy();
+    
+    this.postList = new PostList({
       elem: this.$posts,
       count: 25,
       subreddits: this.store.list.join('+'),

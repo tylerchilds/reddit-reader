@@ -10,18 +10,12 @@
     this.$elem.innerHTML = '';
     this.fetchPosts();
 
-    this.$elem.addEventListener('click', function(e) {
-      if(e.target && e.target.classList.contains('load-comments')) {
-        this.fetchComments(e.target)
-      }
-    }.bind(this));
+    this.loadComments = this.loadComments.bind(this);
+    this.toggleCollapse = this.toggleCollapse.bind(this)
 
-    this.$elem.addEventListener('click', function(e) {
-      if(e.target && e.target.classList.contains('toggle')) {
-        e.target.parentNode.classList.toggle('collapsed');
-        this.handleVisibility();
-      }
-    }.bind(this));
+    this.$elem.addEventListener('click', this.loadComments);
+
+    this.$elem.addEventListener('click', this.toggleCollapse);
   }
 
   PostList.prototype = Object.create(InfiniteList.prototype)
@@ -69,6 +63,24 @@
       }
     }
     req.send();
+  }
+
+  PostList.prototype.toggleCollapse = function(e) {
+    if(e.target && e.target.classList.contains('toggle')) {
+      e.target.parentNode.classList.toggle('collapsed');
+      this.handleVisibility();
+    }
+  }
+
+  PostList.prototype.loadComments = function(e) {
+    if(e.target && e.target.classList.contains('load-comments')) {
+      this.fetchComments(e.target)
+    }
+  }
+
+  PostList.prototype.destroy = function(){
+    this.$elem.removeEventListener('click', this.toggleCollapse)
+    this.$elem.removeEventListener('click', this.loadComments)
   }
 
   window.PostList = PostList;
